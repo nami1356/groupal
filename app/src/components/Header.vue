@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <router-link to="/home"><img src="@/assets/house.png"></router-link> |
+    <router-link to="/home"><img src="@/assets/house.png"></router-link>
     <router-link to="/search"><img src="@/assets/magnifying-glass.png"></router-link> |
     <router-link to="/signup">Signup</router-link> |
     <router-link to="/signin">Signin</router-link> |
@@ -18,5 +18,7 @@ export default {
 </script>
 
 <style scoped>
-
+.header {
+  background-color: #66FFFF;
+}
 </style>
