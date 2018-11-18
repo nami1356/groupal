@@ -2,12 +2,10 @@
   <div class="home">
     <div class="global-area">
       <p>ホーム</p>
-      <button @click="changeFeed()">
-        フィード
-      </button>
-      <button @click="changeGroup()">
-        グループ
-      </button>
+      <el-row :gutter="20">
+        <el-col :span="12"><el-button type="primary" @click="changeFeed()">フィード</el-button></el-col>
+        <el-col :span="12"><el-button type="primary" @click="changeGroup()">グループ</el-button></el-col>
+      </el-row>
     </div>
     <div class="content">
       <Feed v-show="feedStatus"/>
@@ -51,6 +49,7 @@ export default {
   grid-template-rows: 100px 1fr;
 }
 .global-area {
+  background-color: #E4E7ED;
   grid-row: 1/2;
 }
 .content {

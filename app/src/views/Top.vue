@@ -31,7 +31,7 @@ export default {
 <style scoped>
 #container {
     display: grid; /* グリッドレイアウト */
-    grid-template-rows: 80px auto 30px;
+    grid-template-rows: 40px auto 30px;
     grid-template-columns: 1fr;
     height: 100vh;
     overflow: auto;

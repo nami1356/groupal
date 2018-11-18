@@ -2,15 +2,11 @@
   <div class="account">
     <div class="global-area">
       <p>アカウント</p>
-      <button @click="changeConf()">
-        設定
-      </button>
-      <button @click="changeTag()">
-        タグ設定
-      </button>
-      <button @click="changeInfo()">
-        お知らせ
-      </button>
+      <el-row :gutter="20">
+        <el-col :span="8"><el-button type="primary" @click="changeConf()"> 設定 </el-button></el-col>
+        <el-col :span="8"><el-button type="primary" @click="changeTag()">タグ設定</el-button></el-col>
+        <el-col :span="8"><el-button type="primary" @click="changeInfo()">お知らせ</el-button></el-col>
+      </el-row>
     </div>
     <div class="content">
       <Conf v-show="confStatus"/>
@@ -65,8 +61,11 @@ export default {
   display: grid;
   grid-template-rows: 120px 1fr;
 }
+.global-area el-col {
+  width: 100px;
+}
 .global-area {
-  background-color: yellow;
+  background-color: #E4E7ED;
   grid-row: 1/2;
 }
 .content {

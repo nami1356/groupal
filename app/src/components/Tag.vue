@@ -1,22 +1,33 @@
 <template>
   <div class="tag">
     <div class="addtagholder">
-      <h1>20タグ設定できます</h1>
-      <button type="button" name="button" @click="addTagHolder()">拡張</button>
+      <p>20タグ設定できます</p>
+      <el-button size="mini" type="info"
+      @click="addTagHolder()">拡張</el-button>
       <!-- ランダムに有限のタグを表示 -->
     </div>
     <div v-for="(v, i) in showTags" :key="i" class="tagcontent">
-      <button type="button" name="button" @click="addTag()">{{v}}</button>
+      <el-button type="primary" size="small" @click="addTag()">
+        {{v}}
+      </el-button>
     </div>
     <div class="searchtag">
-      <input type="text" placeholder="タグを追加する" v-model="searchTag"/>
+      <el-input type="text" placeholder="タグを検索する" v-model="searchTag"/>
     </div>
     <!-- 検索→tagsに入れる -->
     <div class="createtag">
-      <input type="text" placeholder="タグを作成する" v-model="newTag">
-      <button type="button" @click="createTag">タグ作成</button>
+      <el-input type="text" placeholder="タグを作成する" v-model="newTag"/>
+      <el-button type="info" @click="createTag">タグ作成</el-button>
     </div>
-
+    <el-collapse accordion>
+      <el-collapse-item title="オススメのタグ">
+        <div v-for="(v, i) in showTags" :key="i" class="reccomendtag">
+          <el-button type="primary" size="small" @click="addTag()">
+            {{v}}
+          </el-button>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 <script>
@@ -37,7 +48,11 @@ export default {
       })
     },
     addTag() {
+      this.$firestore.collection('users').doc('tags').add({
+        tags:this.tags.push('addtest')
+      })
       // 自身にタグを設定する
+
     // },
     // addTagHolder() {
     //   let tagholder= this.$firestore.collection(users).doc(tagholder).get({
@@ -64,16 +79,30 @@ export default {
 
 }
 .addtagholder {
+  padding: 3% 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 
 }
 .tagcontent {
-
+  padding: 3% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 .searchtag {
+  margin-bottom: 10px;
 
 }
 .createtag {
 
+}
+.reccomendtag {
+  padding: 3% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 </style>
