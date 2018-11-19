@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <router-link to="/home"><img src="@/assets/house.png"></router-link>
-    <router-link to="/search"><img src="@/assets/magnifying-glass.png"></router-link>
+    <img src="@/assets/magnifying-glass.png" @click="showSearch">
     <el-badge :value="12" class="chat">
       <router-link to="/chat"><img src="@/assets/envelope.png"></router-link>
   </el-badge>
@@ -14,7 +14,17 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    showSearch() {
+      this.search = this.search
+    }
+  }
 }
 </script>
 

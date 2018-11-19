@@ -3,7 +3,7 @@
     <div class="global-area">
       <p>アカウント</p>
       <el-row :gutter="20">
-        <el-col :span="8"><el-button type="primary" @click="changeConf()"> 設定 </el-button></el-col>
+        <el-col :span="8"><el-button type="primary" @click="changeConf()">&emsp;設定&emsp;</el-button></el-col>
         <el-col :span="8"><el-button type="primary" @click="changeTag()">タグ設定</el-button></el-col>
         <el-col :span="8"><el-button type="primary" @click="changeInfo()">お知らせ</el-button></el-col>
       </el-row>

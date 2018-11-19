@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 
 export default {
   name: 'Signin',
@@ -23,15 +22,26 @@ export default {
   },
   methods: {
     signIn () {
-      firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(
-        user => {
-          alert(user.name + 'Success!')
-          this.$router.push('/home')
+      // loginし、companyIDが存在するかどうかcustum claimsを確認。
+      // 格納されていない場合、signoutしてloginへ
+      this.$auth.signInWithEmailAndPassword(this.username, this.password).then(
+        result => {
+          alert('success')
+          return result.user.getIdTokenResult()
         },
         err => {
           alert(err.message)
         }
-      )
+      ).then((result) => {
+        // user情報関連をstateに保管
+        if (result) {
+          this.$router.push('/')
+        } else {
+          this.$auth.signOut().then(() => {
+            this.$router.push('/signIn')
+          })
+        }
+      })
     }
   }
 }

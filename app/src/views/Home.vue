@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <div class="global-area">
-      <p>ホーム</p>
+      <p v-show="!search">ホーム</p>
+      <el-input type="text" placeholder="検索" v-show="search" v-model="searchContent"/>
       <el-row :gutter="20">
         <el-col :span="12"><el-button type="primary" @click="changeFeed()">フィード</el-button></el-col>
         <el-col :span="12"><el-button type="primary" @click="changeGroup()">グループ</el-button></el-col>
@@ -23,7 +24,9 @@ export default {
   data() {
     return {
       feedStatus: true,
-      groupStatus: false
+      groupStatus: false,
+      search: false,
+      searchContent: ''
     }
   },
   components: {

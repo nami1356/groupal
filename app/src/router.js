@@ -23,6 +23,7 @@ export default new Router({
       path: '/',
       name: 'Top',
       component: Top,
+      redirect: 'home',
       // meta: { requiresAuth: true },
       children: [
         {

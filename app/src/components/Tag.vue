@@ -58,7 +58,7 @@ export default {
     //   let tagholder= this.$firestore.collection(users).doc(tagholder).get({
     //     this.tagholder= tagholder
     //   }),
-    //   this.$firestore.collection(users).doc(tagholder).add({
+    //   this.$firestore.collection(users).doc(tagholder).update({
     //     tagholder: this.tagholder++
     //   })
     //   // 自身のタグ追加可能数を増やす
