@@ -5,15 +5,12 @@ import Signup from './views/Signup.vue'
 import Signin from './views/Signin.vue'
 import Account from './views/Account.vue'
 import Home from './views/Home.vue'
-// import Tag from './components/Tag.vue'
-// import Info from './components/Info.vue'
-// import Conf from './components/Conf.vue'
+import Chat from './views/Chat.vue'
 
 Vue.use(Router)
 
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
+
+let router = new Router({
   routes: [
     {
       path: '*',
@@ -54,6 +51,11 @@ export default new Router({
           //     component: Info
           //   }
           // ]
+        },
+        {
+          path: '/chat',
+          name: 'Chat',
+          component: Chat
         }
       ]
     },
@@ -69,3 +71,23 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  if (requiresAuth) {
+    Vue.prototype.$auth.onAuthStateChanged(function (user) {
+      if (user) {
+        next()
+      } else {
+        next({
+          path: '/signin',
+          query: { redirect: to.fullPath }
+        })
+      }
+    })
+  } else {
+    next()
+  }
+})
+
+export default router

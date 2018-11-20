@@ -23,8 +23,8 @@ export default {
   name: 'Home',
   data() {
     return {
-      feedStatus: true,
-      groupStatus: false,
+      feedStatus: false,
+      groupStatus: true,
       search: false,
       searchContent: ''
     }

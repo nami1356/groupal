@@ -1,12 +1,12 @@
 <template>
-  <div class="homefeed">
-    <h1>開発中</h1>
+  <div class="talkmail">
+    <h1>メール開発中</h1>
   </div>
 </template>
 <script>
 
 export default {
-  name: "HomeFeed",
+  name: "TalkMail",
   data () {
     return {
 

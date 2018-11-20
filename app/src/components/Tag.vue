@@ -106,3 +106,5 @@ export default {
 }
 
 </style>
+
+<!-- ボタンをel-tagに変更 -->
