@@ -6,9 +6,9 @@
       @click="addTagHolder()">拡張</el-button>
       <!-- ランダムに有限のタグを表示 -->
     </div>
-    <div v-for="(v, i) in showTags" :key="i" class="tagcontent">
+    <div v-for="(v, i) in 5" :key="i" class="tagcontent">
       <el-button type="primary" size="small" @click="addTag()">
-        {{v}}
+        {{showTags[v]}}
       </el-button>
     </div>
     <div class="searchtag">
