@@ -6,6 +6,7 @@ import Signin from './views/Signin.vue'
 import Account from './views/Account.vue'
 import Home from './views/Home.vue'
 import Chat from './views/Chat.vue'
+import firebase from './firebase/index'
 
 Vue.use(Router)
 
@@ -17,7 +18,7 @@ let router = new Router({
       redirect: 'signin'
     },
     {
-      path: '/',
+      path: '/top',
       name: 'Top',
       component: Top,
       redirect: 'home',
@@ -73,19 +74,21 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  if (requiresAuth) {
-    Vue.prototype.$auth.onAuthStateChanged(function (user) {
-      if (user) {
-        next()
-      } else {
-        next({
-          path: '/signin',
-          query: { redirect: to.fullPath }
-        })
-      }
-    })
+  // check to see if route has auth guard
+  if(to.matched.some(rec => rec.meta.requiresAuth)){
+    // check auth state of user
+    let user = firebase.auth().currentUser
+    if (user) {
+      // User is signed in. Proceed to route
+      next()
+    } else {
+      // No user is signed in. Redirect to login
+      next({
+        name: 'Signin'
+      })
+    }
   } else {
+    // if route is not guarded by auth, proceed
     next()
   }
 })

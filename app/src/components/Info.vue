@@ -1,6 +1,6 @@
 <template>
   <div class="info">
-    <h1>Info!!</h1>
+    <h1>Info開発中</h1>
   </div>
 </template>
 

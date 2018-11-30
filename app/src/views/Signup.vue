@@ -1,65 +1,79 @@
 <template>
   <div class="signup">
-    <h2>Sign up</h2>
-    <input type="text" placeholder="Username" v-model="username">
-    <input type="password" placeholder="Password" v-model="password">
-    <button @click="signUp">Register</button>
-    <p>Do you have an account?
-      <router-link to="/signin">sign in now!!</router-link>
-    </p>
+    <form class="card-panel" @submit.prevent="signup">
+      <h2 class="center">Signup</h2>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" v-model="email">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" v-model="password">
+      </div>
+      <div class="field">
+        <label for="name">Alias</label>
+        <input id="name" type="text" v-model="alias">
+      </div>
+      <p v-if="feedback" class="red-text">{{ feedback }}</p>
+      <div class="field">
+        <button class="btn">Signup</button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
-import firebase from 'firebase'
-
 export default {
   name: 'Signup',
-  data () {
-    return {
-      username: '',
-      password: ''
+  data(){
+    return{
+      email: null,
+      password: null,
+      alias: null,
+      feedback: null,
     }
   },
   methods: {
-    signUp: function () {
-      firebase.auth().createUserWithEmailAndPassword(this.username, this.password)
-        .then(user => {
-          alert('Create account: ', user.email)
+    signup(){
+      if(this.alias && this.email && this.password){
+        this.feedback = null
+        let ref = this.$firestore.collection('users').doc(this.alias)
+        ref.get().then(doc => {
+          if(doc.exists){
+            this.feedback = 'This alias already exists'
+          } else {
+          // this alias does not yet exists in the db
+            this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+            .then(user => {
+              ref.set({
+                alias: this.alias,
+                user_id: user.uid
+              })
+            }).then(() => {
+              this.$router.push({ name: 'Top' })
+            })
+            .catch(err => {
+              this.feedback = err.message
+            })
+          }
         })
-        .catch(error => {
-          alert(error.message)
-        })
+      } else {
+        this.feedback = 'Please fill in all fields'
+      }
     }
   }
 }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.signup {
-  margin-top: 20px;
 
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center
+<style>
+.signup{
+  max-width: 400px;
+  margin-top: 60px;
 }
-input {
-  margin: 10px 0;
-  padding: 10px;
+.signup h2{
+  font-size: 2.4em;
+}
+.signup .field{
+  margin-bottom: 16px;
 }
 </style>

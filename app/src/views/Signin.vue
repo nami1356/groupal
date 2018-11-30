@@ -1,78 +1,62 @@
 <template>
-  <div class="signin">
-    <h2>Sign in</h2>
-    <input type="text" placeholder="Username" v-model="username">
-    <input type="password" placeholder="Password" v-model="password">
-    <button @click="signIn">Signin</button>
-    <p>You don't have an account?
-      <router-link to="/signup">create account now!!</router-link>
-    </p>
+  <div class="signin container">
+    <form class="card-panel" @submit.prevent="signin">
+      <h2 class="center deep-purple-text">Signin</h2>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" v-model="email">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" v-model="password">
+      </div>
+      <p v-if="feedback" class="red-text center">{{ feedback }}</p>
+      <div class="field center">
+        <button class="btn deep-purple">Signin</button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
-
+import firebase from './firebase/index'
 export default {
   name: 'Signin',
-  data ()  {
-    return {
-      username: '',
-      password: ''
+  data(){
+    return{
+      email: null,
+      password: null,
+      feedback: null
     }
   },
   methods: {
-    signIn () {
-      // loginし、companyIDが存在するかどうかcustum claimsを確認。
-      // 格納されていない場合、signoutしてloginへ
-      this.$auth.signInWithEmailAndPassword(this.username, this.password).then(
-        result => {
-          alert('success')
-          return result.user.getIdTokenResult()
-        },
-        err => {
-          alert(err.message)
-        }
-      ).then((result) => {
-        // user情報関連をstateに保管
-        if (result) {
-          this.$router.push('/')
-        } else {
-          this.$auth.signOut().then(() => {
-            this.$router.push('/signIn')
-          })
-        }
-      })
+    signin(){
+      if(this.email && this.password){
+        this.feedback = null
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          //console.log(user)
+          this.$router.push({ name: 'Top' })
+        }).catch(err => {
+          this.feedback = err.message
+        })
+      } else {
+        this.feedback = 'Please fill in both fields'
+      }
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
+<style>
+.signin{
+  max-width: 400px;
+  margin-top: 60px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.login h2{
+  font-size: 2.4em;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.signin {
-  margin-top: 20px;
-
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center
-}
-input {
-  margin: 10px 0;
-  padding: 10px;
+.login .field{
+  margin-bottom: 16px;
 }
 </style>

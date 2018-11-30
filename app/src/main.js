@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
-import firebase from './firebase'
+import firebase from './firebase/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 

@@ -31,12 +31,12 @@ export default {
       this.groupfeeds.push(doc.data())
     })
   }),
-  this.$firestore.collection('group').get().then((
-  querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-    this.group.push(doc.data())
-  })
-  })
+    this.$firestore.collection('group').get().then((
+    querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      this.group.push(doc.data())
+    })
+    })
   }
 }
 </script>

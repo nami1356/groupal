@@ -1,6 +1,8 @@
 <template>
   <div class="conf">
-    <h1>Conf!!</h1>
+    <router-link :to="{ name: 'Signup'}">
+      <h1>Signup!!</h1>
+    </router-link>
   </div>
 </template>
 
