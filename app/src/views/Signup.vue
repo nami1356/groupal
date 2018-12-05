@@ -13,12 +13,14 @@
       <div class="field">
         <label for="name">Alias</label>
         <input id="name" type="text" v-model="alias">
+        <p>{{this.alias}}</p>
       </div>
       <p v-if="feedback" class="red-text">{{ feedback }}</p>
       <div class="field">
         <button class="btn">Signup</button>
       </div>
     </form>
+    <router-link :to="{ name: 'Signin'}">サインインへ</router-link>
   </div>
 </template>
 
@@ -43,11 +45,10 @@ export default {
             this.feedback = 'This alias already exists'
           } else {
           // this alias does not yet exists in the db
-            this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-            .then(user => {
+            this.$auth.createUserWithEmailAndPassword(this.email, this.password)
+            .then(() => {
               ref.set({
-                alias: this.alias,
-                user_id: user.uid
+                alias: this.alias
               })
             }).then(() => {
               this.$router.push({ name: 'Top' })

@@ -1,13 +1,18 @@
 <template>
   <div class="homegroup">
+    <div class="creategroup">
+      <router-link :to="{ name: 'CreateGroup'}">
+        <el-button type="info" @click="createGroup()">グループ作成</el-button>
+      </router-link>
+    </div>
     <div class="groupfeeds">
       <div class="group-content" style="font-size: 24px">
-        <p>{{group[0].groupname}}</p>
+        <p>{{group[0]['groupname']}}</p>
         <br/>
-        <p>{{groupfeeds[0].speaker}}</p>
+        <img src="@/assets/avatar.png" alt="avator">
+        <p>{{groupfeeds[0]['speaker']}}</p>
         <div class="content">
-          <img src="@/assets/avatar.png" alt="avator">
-          <p>{{groupfeeds[0].content}}</p>
+          <p>{{groupfeeds[0]['content']}}</p>
         </div>
       </div>
     </div>
@@ -29,13 +34,13 @@ export default {
     querySnapshot) => {
     querySnapshot.forEach((doc) => {
       this.groupfeeds.push(doc.data())
-    })
-  }),
+      })
+    }),
     this.$firestore.collection('group').get().then((
     querySnapshot) => {
     querySnapshot.forEach((doc) => {
       this.group.push(doc.data())
-    })
+      })
     })
   }
 }

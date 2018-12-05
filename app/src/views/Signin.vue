@@ -15,11 +15,11 @@
         <button class="btn deep-purple">Signin</button>
       </div>
     </form>
+    <router-link :to="{ name: 'Signup'}">登録へ</router-link>
   </div>
 </template>
 
 <script>
-import firebase from './firebase/index'
 export default {
   name: 'Signin',
   data(){
@@ -33,7 +33,7 @@ export default {
     signin(){
       if(this.email && this.password){
         this.feedback = null
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        this.$auth.signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
           //console.log(user)
           this.$router.push({ name: 'Top' })

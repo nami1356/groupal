@@ -6,6 +6,7 @@ import Signin from './views/Signin.vue'
 import Account from './views/Account.vue'
 import Home from './views/Home.vue'
 import Chat from './views/Chat.vue'
+import CreateGroup from './views/CreateGroup.vue'
 import firebase from './firebase/index'
 
 Vue.use(Router)
@@ -57,6 +58,11 @@ let router = new Router({
           path: '/chat',
           name: 'Chat',
           component: Chat
+        },
+        {
+          path: '/creategroup',
+          name: 'CreateGroup',
+          component: CreateGroup
         }
       ]
     },
