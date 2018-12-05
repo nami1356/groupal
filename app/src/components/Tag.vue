@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     createTag() {
-      this.$firestore.collection('tags').add({
+      this.$firestore.collection('tags').doc(this.newTag).set({
         tags: this.newTag
       })
     },
