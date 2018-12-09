@@ -1,21 +1,17 @@
 <template>
-  <div class="homegroup">
+  <div class="group">
     <div class="creategroup">
       <router-link :to="{ name: 'CreateGroup'}">
-        <el-button type="info" @click="createGroup()">グループ作成</el-button>
+        <el-button type="info">グループ作成</el-button>
       </router-link>
     </div>
-    <div class="groupfeeds">
-      <div class="group-content" style="font-size: 24px">
-        <p>{{group[0]['groupname']}}</p>
-        <br/>
-        <img src="@/assets/avatar.png" alt="avator">
-        <p>{{groupfeeds[0]['speaker']}}</p>
-        <div class="content">
-          <p>{{groupfeeds[0]['content']}}</p>
-        </div>
+    <div class="mygroup" v-for="(g,index) in groups" :key="index">
+      <div v-for="(group,index) in g" :key="index">
+        <el-button type="info" @click="groupInfo" v-model="grouptag">{{group}}</el-button>
+        <p>{{grouptag}}test!</p>
       </div>
     </div>
+    <h1>{{email}}</h1>
   </div>
 </template>
 <script>
@@ -23,25 +19,23 @@ export default {
   name: "HomeGroup",
   data () {
     return {
-      group: [],
-      groupfeeds: [],
-      // groupname: group[0].groupname,
-      // speaker: groupfeed[0].speaker
+      groups: [],
+      grouptag: '',
+      email: ''   //test
+    }
+  },
+  methods: {
+    groupInfo() {
+      this.$router.push({ name: 'GroupInfo', params: {group:this.grouptag} })
     }
   },
   created:function() {
-    this.$firestore.collection('group').doc('codesmith').collection('feeds').get().then((
-    querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      this.groupfeeds.push(doc.data())
+    // 自分の所属グループを取得 .where("myid","==",true)?
+    this.$firestore.collection('users').doc('test1208').get().then((
+      querySnapshot) => {
+        this.groups.push(querySnapshot.data().group)
       })
-    }),
-    this.$firestore.collection('group').get().then((
-    querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      this.group.push(doc.data())
-      })
-    })
+      this.email = this.$store.state.email
   }
 }
 </script>

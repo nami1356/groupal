@@ -15,6 +15,7 @@ Vue.use(firebase)
 
 Vue.config.productionTip = false
 
+
 new Vue({
   router,
   store,

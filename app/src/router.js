@@ -7,12 +7,14 @@ import Account from './views/Account.vue'
 import Home from './views/Home.vue'
 import Chat from './views/Chat.vue'
 import CreateGroup from './views/CreateGroup.vue'
+import GroupInfo from './views/GroupInfo.vue'
 import firebase from './firebase/index'
 
 Vue.use(Router)
 
 
 let router = new Router({
+  mode:'history',
   routes: [
     {
       path: '*',
@@ -22,7 +24,7 @@ let router = new Router({
       path: '/top',
       name: 'Top',
       component: Top,
-      redirect: 'home',
+      redirect: Home,
       // meta: { requiresAuth: true },
       children: [
         {
@@ -33,7 +35,7 @@ let router = new Router({
         {
           path: '/account',
           name: 'Account',
-          component: Account,
+          component: Account
           // redirect: '/conf',
           // routeはnameで指定
           // children: [
@@ -63,6 +65,11 @@ let router = new Router({
           path: '/creategroup',
           name: 'CreateGroup',
           component: CreateGroup
+        },
+        {
+          path: '/groupinfo/:group',
+          name: 'GroupInfo',
+          component: GroupInfo
         }
       ]
     },

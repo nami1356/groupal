@@ -6,9 +6,9 @@
       @click="addTagHolder()">拡張</el-button>
       <!-- ランダムに有限のタグを表示 -->
     </div>
-    <div v-for="(v, i) in 5" :key="i" class="tagcontent">
-      <el-button type="primary" size="small" @click="addTag()">
-        {{showTags[v]}}
+    <div v-for="(v, i) in myTag" :key="i" class="tagcontent">
+      <el-button type="primary" size="small">
+        {{v}}
       </el-button>
     </div>
     <div class="searchtag">
@@ -38,7 +38,9 @@ export default {
       leftTag: 0,
       searchTag: '',
       showTags: [],
-      newTag: ''
+      newTag: '',
+      myNewTag: '',
+      myTag: ''
     }
   },
   methods: {
@@ -48,20 +50,9 @@ export default {
       })
     },
     addTag() {
-      this.$firestore.collection('users').doc('tags').add({
-        tags:this.tags.push('addtest')
+      this.$firestore.collection('users').doc(this.$store.state.alias).collection('tags').doc(this.myNewTag).set({
+        tag:this.myNewTag
       })
-      // 自身にタグを設定する
-
-    // },
-    // addTagHolder() {
-    //   let tagholder= this.$firestore.collection(users).doc(tagholder).get({
-    //     this.tagholder= tagholder
-    //   }),
-    //   this.$firestore.collection(users).doc(tagholder).update({
-    //     tagholder: this.tagholder++
-    //   })
-    //   // 自身のタグ追加可能数を増やす
     }
   },
   created:function() {
@@ -70,6 +61,11 @@ export default {
     querySnapshot.forEach((doc) => {
       this.showTags.push(doc.data().tags)
     })
+  }),
+    this.$firestore.collection('users').doc(this.$store.state.alias).collection('tags').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.myTag.push(doc.data().tag)
+      })
     })
   }
 }

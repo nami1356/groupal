@@ -32,8 +32,9 @@ export default {
     return {
       groupName: '',
       tag: '',
+      member: '',
       tags:[],
-      member: []
+      members: []
     }
   },
   methods: {
@@ -41,12 +42,13 @@ export default {
       this.tags.push(this.tag)
     },
     addMember() {
-      this.tags.push(this.tag)
+      this.members.push(this.member)
     },
     createGroup() {
       this.$firestore.collection('group').set({
         groupname: this.groupName,
-        member: this.member
+        member: this.members,
+        tags: this.tags
       })
     }
   }

@@ -28,7 +28,8 @@ export default {
   name: 'Header',
   data() {
     return {
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      search: false
     }
   },
   methods: {
