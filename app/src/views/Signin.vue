@@ -35,28 +35,31 @@ export default {
         this.feedback = null
         this.$auth.signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          this.$firestore.collection('users').doc(this.email).get().then((querySnapshot) => {
-            this.alias = querySnapshot.data().alias
-            this.$store.commit('setEmail',{email : this.email})
-            this.$store.commit('setAlias',{alias : this.alias})
-          }).then(() => {
-            this.$firestore.colledtion('users').doc(this.email).collection('tags').get().then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                this.myTag.push(doc.data().tag)
-              })
-            })
-          }).then(() => {
-            alert('success!')
-            this.$router.push({ name: 'Home' })
-          }).catch(err => {
-            alert('error!')
-            this.feedback = err.message
-          })
-          })
+          alert('success!')
+          this.$router.push({ name: 'Home' })
+        }).catch(err => {
+          alert('error!')
+          this.feedback = err.message
+        })
       } else {
         this.feedback = 'Please fill in both fields'
       }
     }
+  },
+  created:function() {
+    this.$firestore.collection('users').doc(this.email).get().then((querySnapshot) => {
+      this.alias = querySnapshot.data().alias
+      this.$store.commit('setEmail',{email : this.email})
+      this.$store.commit('setAlias',{alias : this.alias})
+      }).then(() => {
+      this.$firestore.colledtion('users').doc(this.email).collection('tags').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.myTag.push(doc.data().tag)
+        })
+      })
+    }).then(() => {
+      this.$store.commit('setFirstTag',{myFirstTag : this.myTag})
+    })
   }
 }
 </script>
@@ -66,8 +69,7 @@ export default {
   max-width: 400px;
   margin-top: 60px;
 }
-.field input{
-}
+
 .field label{
   text-decoration-color: purple;
 }

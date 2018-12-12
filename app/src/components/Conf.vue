@@ -15,7 +15,7 @@ export default {
     }
   },
   created: function() {
-    this.$firestore.collection('users').doc(this.$store.state.alias).get().then((querySnapshot) => {
+    this.$firestore.collection('users').doc(this.$store.state.email).get().then((querySnapshot) => {
       this.alias.push(querySnapshot.data().alias)
     })
   }

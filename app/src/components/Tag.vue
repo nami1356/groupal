@@ -50,7 +50,7 @@ export default {
       })
     },
     addTag() {
-      this.$firestore.collection('users').doc(this.$store.state.alias).collection('tags').doc(this.myNewTag).set({
+      this.$firestore.collection('users').doc(this.$store.state.email).collection('tags').doc(this.myNewTag).set({
         tag:this.myNewTag
       })
     }
@@ -62,7 +62,7 @@ export default {
       this.showTags.push(doc.data().tags)
     })
   }),
-    this.$firestore.collection('users').doc(this.$store.state.alias).collection('tags').get().then((querySnapshot) => {
+    this.$firestore.collection('users').doc(this.$store.state.email).collection('tags').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.myTag.push(doc.data().tag)
       })
@@ -71,9 +71,7 @@ export default {
 }
 </script>
 <style scoped>
-.tag {
 
-}
 .addtagholder {
   padding: 3% 0;
   display: flex;
@@ -91,9 +89,7 @@ export default {
   margin-bottom: 10px;
 
 }
-.createtag {
 
-}
 .reccomendtag {
   padding: 3% 0;
   display: flex;

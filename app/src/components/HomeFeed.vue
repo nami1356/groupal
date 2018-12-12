@@ -33,7 +33,7 @@ export default {
     }
   },
   created:function() {
-    this.$firestore.collection('group').doc('codesmith').collection('feeds').get().then((
+    this.$firestore.collection('group').doc(this.$state.store.email).collection('feeds').get().then((
     querySnapshot) => {
     querySnapshot.forEach((doc) => {
       this.groupfeeds.push(doc.data())

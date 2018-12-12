@@ -30,7 +30,7 @@ export default {
       email: null,
       password: null,
       alias: null,
-      feedback: null,
+      feedback: null
     }
   },
   methods: {

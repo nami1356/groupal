@@ -31,7 +31,7 @@ export default {
   },
   created:function() {
     // 自分の所属グループを取得 .where("myid","==",true)?
-    this.$firestore.collection('users').doc('test1208').get().then((
+    this.$firestore.collection('users').doc(this.$state.store.email).get().then((
       querySnapshot) => {
         this.groups.push(querySnapshot.data().group)
       })
