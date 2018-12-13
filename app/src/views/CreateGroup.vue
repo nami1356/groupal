@@ -12,6 +12,11 @@
         テストタグ
       </el-button>
     </div>
+    <div class="needtag">
+      <p v-for="(v , i) in tags" :key="i">
+        {{v}}
+      </p>
+    </div>
     <div class="member">
       <p>メンバーを追加します</p>
       <el-input type="text" placefolder="search"/>
@@ -37,6 +42,7 @@ export default {
       members: []
     }
   },
+  // 自分が設定したタグを持っているかの判定が必要
   methods: {
     addTag() {
       this.tags.push(this.tag)
@@ -49,6 +55,10 @@ export default {
         groupname: this.groupName,
         member: this.members,
         tags: this.tags
+      }).then(() => {
+      this.$firestore.collection('users').doc(this.$state.store.email).add({
+        group: this.groupname
+      })
       })
     }
   }

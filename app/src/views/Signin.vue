@@ -46,7 +46,7 @@ export default {
       }
     }
   },
-  created:function() {
+  beforeDestroy:function() {
     this.$firestore.collection('users').doc(this.email).get().then((querySnapshot) => {
       this.alias = querySnapshot.data().alias
       this.$store.commit('setEmail',{email : this.email})
@@ -71,7 +71,7 @@ export default {
 }
 
 .field label{
-  text-decoration-color: purple;
+  text-decoration-color: rgb(101, 18, 112);
 }
 .login h2{
   font-size: 2.4em;
