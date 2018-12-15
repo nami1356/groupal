@@ -26,7 +26,8 @@ export default {
       password: null,
       feedback: null,
       alias: '',
-      myTag: []
+      myTag: [],
+      myGroup: []
     }
   },
   methods: {
@@ -49,16 +50,17 @@ export default {
   beforeDestroy:function() {
     this.$firestore.collection('users').doc(this.email).get().then((querySnapshot) => {
       this.alias = querySnapshot.data().alias
+      this.myGroup = querySnapshot.data().group
       this.$store.commit('setEmail',{email : this.email})
       this.$store.commit('setAlias',{alias : this.alias})
+      this.$store.commit('setGroup',{myGroup: this.myGroup})
       }).then(() => {
       this.$firestore.colledtion('users').doc(this.email).collection('tags').get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           this.myTag.push(doc.data().tag)
+          this.$store.commit('setTag',{myTag : this.myTag})
         })
       })
-    }).then(() => {
-      this.$store.commit('setFirstTag',{myFirstTag : this.myTag})
     })
   }
 }

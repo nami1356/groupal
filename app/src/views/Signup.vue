@@ -75,7 +75,8 @@ export default {
             }).then(() => {
               this.$store.commit('setEmail',{email : this.email})
               this.$store.commit('setAlias',{alias : this.alias})
-              this.$store.commit('setFirstTag',{myFirstTag : this.alias})
+              this.$store.commit('setTag',{myTag : this.alias})
+              this.$store.commit('setGroup',{myGroup : this.alias})
             }).then(() => {
               this.$router.push({ name: 'Top'})
             })
