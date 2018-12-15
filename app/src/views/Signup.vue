@@ -47,10 +47,29 @@ export default {
             .then(() => {
               ref.set({
                 alias: this.alias,
-                email: this.email
+                email: this.email,
+                group: [this.alias]
               })
             }).then(() => {
               ref.collection('tags').add({
+                tag: this.alias
+              })
+            }).then(() => {
+              this.$firestore.collection('group').doc(this.alias).set({
+                groupname: this.alias,
+                member: [this.alias],
+                tags: [this.alias]
+              })
+            }).then(() => {
+              this.$firestore.collection('group').doc(this.alias).collection('feeds').add({
+                content: "これは自分用メモです",
+                date: "投稿日時を入れたい",
+                speaker: this.alias
+              })
+            }).then(() => {
+              this.$firestore.collection('tags').doc(this.alias).set({
+                created: this.alias,
+                member: [this.alias],
                 tag: this.alias
               })
             }).then(() => {
@@ -58,7 +77,7 @@ export default {
               this.$store.commit('setAlias',{alias : this.alias})
               this.$store.commit('setFirstTag',{myFirstTag : this.alias})
             }).then(() => {
-              this.$router.push({ name: 'Home'})
+              this.$router.push({ name: 'Top'})
             })
             .catch(err => {
               this.feedback = err.message

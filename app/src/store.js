@@ -8,7 +8,7 @@ export default new Vuex.Store({
     search: false,
     email: '',
     alias: '',
-    firstTag: ''
+    myTag: ''
   },
   mutations: {
     setEmail(state,payload) {
@@ -18,7 +18,7 @@ export default new Vuex.Store({
       state.alias = payload.alias
     },
     setFirstTag(state,payload) {
-      state.firstTag = payload.myFirstTag
+      state.myTag = payload.myFirstTag
     }
 
   },

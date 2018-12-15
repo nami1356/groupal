@@ -30,12 +30,12 @@ export default {
     }
   },
   created:function() {
+    this.email = this.$store.state.email
     // 自分の所属グループを取得 .where("myid","==",true)?
-    this.$firestore.collection('users').doc(this.$state.store.email).get().then((
+    this.$firestore.collection('users').doc(this.$store.state.email).get().then((
       querySnapshot) => {
         this.groups.push(querySnapshot.data().group)
       })
-      this.email = this.$store.state.email
   }
 }
 </script>
