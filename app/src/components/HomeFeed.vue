@@ -33,16 +33,9 @@ export default {
     }
   },
   created:function() {
-    this.$firestore.collection('group').doc(this.$store.state.email).collection('feeds').get().then((
-    querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      this.groupfeeds.push(doc.data())
-      })
-    }),
-    this.$firestore.collection('group').get().then((
-    querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      this.group.push(doc.data())
+    this.$store.state.myGroup.forEach((mygroup) => {
+      this.$firestore.collection('group').doc(mygroup).get.then((doc) => {
+        this.group.push(doc.data().groupname)
       })
     })
   }

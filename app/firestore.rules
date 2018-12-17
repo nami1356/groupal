@@ -1,19 +1,7 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /users/{userID} {
-      allow read: if request.auth != null;
-      allow write: if request.auth.token.email == userID;
-
-      match {allChildren=**} {
-        allow read: if request.auth != null;
-        allow write: if request.auth.token.email == userID;
-      }
+    match /{document=**} {
+      allow read, write;
     }
-  match /group/{groupID} {
-    allow read, write:
-  }
-  match /tags/{tagID} {
-    allow read, write:
-  }
   }
 }

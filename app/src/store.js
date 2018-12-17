@@ -18,11 +18,11 @@ export default new Vuex.Store({
     setAlias(state,payload) {
       state.alias = payload.alias
     },
-    setFirstTag(state,payload) {
-      state.myTag = payload.myFirstTag
+    setTag(state,payload) {
+      state.myTag = payload.myTag
     },
     setGroup(state,payload) {
-      state.myGroup = payload.myFirstTag
+      state.myGroup = payload.myGroup
     }
 
   },

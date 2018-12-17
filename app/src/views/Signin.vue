@@ -55,7 +55,7 @@ export default {
       this.$store.commit('setAlias',{alias : this.alias})
       this.$store.commit('setGroup',{myGroup: this.myGroup})
       }).then(() => {
-      this.$firestore.colledtion('users').doc(this.email).collection('tags').get().then((querySnapshot) => {
+      this.$firestore.colledtion('users').doc(this.email).collection('tags').get()((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           this.myTag.push(doc.data().tag)
           this.$store.commit('setTag',{myTag : this.myTag})
