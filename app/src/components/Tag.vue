@@ -23,7 +23,7 @@
       <el-collapse-item title="オススメのタグ">
         <div v-for="(v, i) in showTags" :key="i" class="reccomendtag">
           <el-button type="primary" size="small" @click="addTag()">
-            {{v}}
+            {{v.tag}}
           </el-button>
         </div>
       </el-collapse-item>
@@ -46,7 +46,9 @@ export default {
   methods: {
     createTag() {
       this.$firestore.collection('tags').doc(this.newTag).set({
-        tags: this.newTag
+        tag: this.newTag,
+        created: this.$store.state.alias,
+        member: this.$firestore.FieldValue.arrayUnion(this.$state.store.alias)
       })
     },
     addTag() {
@@ -56,12 +58,18 @@ export default {
     }
   },
   created:function() {
-    this.$firestore.collection('tags').get().then((
-    querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      this.showTags.push(doc.data().tags)
-    })
-  }),
+    this.$firestore.collection('tags').onSnapshot(q => {
+      this.showTags = []
+      q.forEach(doc => {
+        this.showTags.push({tag : doc.data().tag})
+      })
+    }),
+  //   (q => (
+  //   querySnapshot) => {
+  //   querySnapshot.forEach((doc) => {
+  //     this.showTags.push(doc.data().tags)
+  //   })
+  // }),
     this.$firestore.collection('users').doc(this.$store.state.email).collection('tags').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.myTag.push(doc.data().tag)
